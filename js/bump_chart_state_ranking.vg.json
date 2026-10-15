@@ -1,0 +1,191 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Tasmania overtook South Australia as the oldest state",
+    "subtitle": "States ranked by share of residents aged 65+, 1975\u20132025 (1 = oldest)",
+    "anchor": "start",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "subtitleColor": "#465267",
+    "offset": 12
+  },
+  "width": "container",
+  "height": 300,
+  "padding": {
+    "left": 5,
+    "top": 5,
+    "bottom": 5,
+    "right": 55
+  },
+  "data": {
+    "url": "data/03_abs_state_population.csv",
+    "format": {
+      "parse": {
+        "year": "number",
+        "rank": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "calculate": "indexof(['Tas.', 'SA', 'NT'], datum.state) >= 0 ? datum.state : 'Other states'",
+      "as": "highlight"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "title": null,
+      "axis": {
+        "labelAngle": 0,
+        "domain": false,
+        "ticks": false
+      }
+    },
+    "y": {
+      "field": "rank",
+      "type": "ordinal",
+      "title": "Rank (1 = oldest)",
+      "axis": {
+        "domain": false,
+        "ticks": false
+      }
+    },
+    "color": {
+      "field": "highlight",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Tas.",
+          "SA",
+          "NT",
+          "Other states"
+        ],
+        "range": [
+          "#C05A12",
+          "#7946AD",
+          "#1768AC",
+          "#8491a3"
+        ]
+      },
+      "legend": null
+    },
+    "detail": {
+      "field": "state"
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3,
+        "interpolate": "monotone"
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "size": 90,
+        "opacity": 1,
+        "stroke": "white",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "state",
+            "title": "State"
+          },
+          {
+            "field": "year",
+            "title": "Year"
+          },
+          {
+            "field": "pct65",
+            "title": "% aged 65+",
+            "format": ".1f"
+          },
+          {
+            "field": "rank",
+            "title": "Rank"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.state === 'Tas.' && datum.year === 2015"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "dy": -16,
+        "fontSize": 11,
+        "fontStyle": "italic"
+      },
+      "encoding": {
+        "text": {
+          "value": "2015: Tasmania becomes the oldest state"
+        },
+        "color": {
+          "value": "#172b4d"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.year === 2025"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "fontSize": 12,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "text": {
+          "field": "state"
+        },
+        "color": {
+          "value": "#172b4d"
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Open Sans",
+    "background": null,
+    "view": {
+      "stroke": null
+    },
+    "title": {
+      "font": "Open Sans",
+      "color": "#172b4d"
+    },
+    "axis": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titleFontWeight": 600,
+      "gridColor": "#eceef1",
+      "domainColor": "#8491a3",
+      "tickColor": "#8491a3"
+    },
+    "legend": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    },
+    "header": {
+      "labelFont": "Open Sans"
+    }
+  }
+}

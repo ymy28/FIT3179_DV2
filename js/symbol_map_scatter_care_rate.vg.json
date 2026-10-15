@@ -1,0 +1,382 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "An older region does not mean more aged care",
+    "subtitle": "People in residential aged care per 1,000 aged 65+, by SA3 region, 30 June 2025 (AIHW residents joined to the ABS 65+ population). Drag across the scatter plot to pick out regions on the map.",
+    "anchor": "start",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "subtitleColor": "#465267",
+    "offset": 12
+  },
+  "data": {
+    "url": "data/11_aihw_care_residents.csv",
+    "format": {
+      "parse": {
+        "sa3_code": "string"
+      }
+    }
+  },
+  "hconcat": [
+    {
+      "width": 380,
+      "height": 440,
+      "projection": {
+        "type": "conicEqualArea",
+        "parallels": [
+          -18,
+          -36
+        ],
+        "rotate": [
+          -132,
+          0
+        ]
+      },
+      "layer": [
+        {
+          "data": {
+            "url": "js/states.topojson",
+            "format": {
+              "type": "topojson",
+              "feature": "states"
+            }
+          },
+          "mark": {
+            "type": "geoshape",
+            "fill": "#e8edf2",
+            "stroke": "#ffffff",
+            "strokeWidth": 1
+          }
+        },
+        {
+          "transform": [
+            {
+              "lookup": "sa3_code",
+              "from": {
+                "data": {
+                  "url": "data/11_abs_population_estimates_and_boundaries.csv",
+                  "format": {
+                    "parse": {
+                      "sa3_code": "string"
+                    }
+                  }
+                },
+                "key": "sa3_code",
+                "fields": [
+                  "sa3_name",
+                  "state",
+                  "pop65_2025",
+                  "pct65_2025",
+                  "lon",
+                  "lat"
+                ]
+              }
+            },
+            {
+              "filter": "datum.pop65_2025 >= 200 && datum.residents > 0"
+            },
+            {
+              "calculate": "datum.residents / datum.pop65_2025 * 1000",
+              "as": "per_1000"
+            }
+          ],
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            }
+          },
+          "layer": [
+            {
+              "mark": {
+                "type": "circle",
+                "opacity": 0.85,
+                "stroke": "white",
+                "strokeWidth": 0.6
+              },
+              "encoding": {
+                "size": {
+                  "field": "residents",
+                  "type": "quantitative",
+                  "title": "Residents",
+                  "scale": {
+                    "range": [
+                      8,
+                      700
+                    ]
+                  },
+                  "legend": {
+                    "orient": "bottom",
+                    "direction": "horizontal",
+                    "symbolFillColor": "#bfc5cc"
+                  }
+                },
+                "color": {
+                  "condition": {
+                    "param": "brush",
+                    "field": "per_1000",
+                    "type": "quantitative",
+                    "title": "Per 1,000 aged 65+",
+                    "scale": {
+                      "type": "threshold",
+                      "domain": [
+                        25,
+                        40,
+                        55
+                      ],
+                      "range": [
+                        "#F8C99B",
+                        "#E89645",
+                        "#C05A12",
+                        "#803005"
+                      ]
+                    },
+                    "legend": {
+                      "orient": "bottom",
+                      "direction": "horizontal"
+                    }
+                  },
+                  "value": "#d5d9de"
+                },
+                "order": {
+                  "field": "residents",
+                  "sort": "descending"
+                },
+                "tooltip": [
+                  {
+                    "field": "sa3_name",
+                    "type": "nominal",
+                    "title": "Region"
+                  },
+                  {
+                    "field": "state",
+                    "type": "nominal",
+                    "title": "State"
+                  },
+                  {
+                    "field": "residents",
+                    "type": "quantitative",
+                    "title": "Residents in aged care",
+                    "format": ","
+                  },
+                  {
+                    "field": "pop65_2025",
+                    "type": "quantitative",
+                    "title": "People aged 65+",
+                    "format": ",.0f"
+                  },
+                  {
+                    "field": "per_1000",
+                    "type": "quantitative",
+                    "title": "Per 1,000 aged 65+",
+                    "format": ".1f"
+                  }
+                ]
+              }
+            },
+            {
+              "transform": [
+                {
+                  "window": [
+                    {
+                      "op": "rank",
+                      "as": "ranking"
+                    }
+                  ],
+                  "sort": [
+                    {
+                      "field": "residents",
+                      "order": "descending"
+                    }
+                  ]
+                },
+                {
+                  "filter": "datum.ranking == 1"
+                },
+                {
+                  "calculate": "'Most residents: ' + datum.sa3_name + ';' + format(datum.residents, ',') + ' people'",
+                  "as": "raw"
+                },
+                {
+                  "calculate": "split(datum.raw, ';')",
+                  "as": "text_annotation"
+                }
+              ],
+              "mark": {
+                "type": "text",
+                "align": "right",
+                "dx": -22,
+                "dy": -6,
+                "baseline": "middle",
+                "fontStyle": "italic",
+                "fontSize": 11,
+                "color": "#172b4d"
+              },
+              "encoding": {
+                "text": {
+                  "field": "text_annotation"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "width": 300,
+      "height": 330,
+      "transform": [
+        {
+          "lookup": "sa3_code",
+          "from": {
+            "data": {
+              "url": "data/11_abs_population_estimates_and_boundaries.csv",
+              "format": {
+                "parse": {
+                  "sa3_code": "string"
+                }
+              }
+            },
+            "key": "sa3_code",
+            "fields": [
+              "sa3_name",
+              "state",
+              "pop65_2025",
+              "pct65_2025",
+              "lon",
+              "lat"
+            ]
+          }
+        },
+        {
+          "filter": "datum.pop65_2025 >= 200 && datum.residents > 0"
+        },
+        {
+          "calculate": "datum.residents / datum.pop65_2025 * 1000",
+          "as": "per_1000"
+        }
+      ],
+      "params": [
+        {
+          "name": "brush",
+          "select": {
+            "type": "interval"
+          }
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "size": 45,
+        "opacity": 0.8
+      },
+      "encoding": {
+        "x": {
+          "field": "pct65_2025",
+          "type": "quantitative",
+          "title": "% of residents aged 65+ (2025)",
+          "scale": {
+            "zero": false
+          }
+        },
+        "y": {
+          "field": "per_1000",
+          "type": "quantitative",
+          "title": "Aged care residents per 1,000 aged 65+"
+        },
+        "color": {
+          "condition": {
+            "param": "brush",
+            "field": "per_1000",
+            "type": "quantitative",
+            "title": "Per 1,000 aged 65+",
+            "scale": {
+              "type": "threshold",
+              "domain": [
+                25,
+                40,
+                55
+              ],
+              "range": [
+                "#F8C99B",
+                "#E89645",
+                "#C05A12",
+                "#803005"
+              ]
+            },
+            "legend": null
+          },
+          "value": "#d5d9de"
+        },
+        "tooltip": [
+          {
+            "field": "sa3_name",
+            "type": "nominal",
+            "title": "Region"
+          },
+          {
+            "field": "state",
+            "type": "nominal",
+            "title": "State"
+          },
+          {
+            "field": "residents",
+            "type": "quantitative",
+            "title": "Residents in aged care",
+            "format": ","
+          },
+          {
+            "field": "pop65_2025",
+            "type": "quantitative",
+            "title": "People aged 65+",
+            "format": ",.0f"
+          },
+          {
+            "field": "per_1000",
+            "type": "quantitative",
+            "title": "Per 1,000 aged 65+",
+            "format": ".1f"
+          }
+        ]
+      }
+    }
+  ],
+  "resolve": {
+    "legend": {
+      "color": "independent"
+    }
+  },
+  "config": {
+    "font": "Open Sans",
+    "background": null,
+    "view": {
+      "stroke": null
+    },
+    "title": {
+      "font": "Open Sans",
+      "color": "#172b4d"
+    },
+    "axis": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titleFontWeight": 600,
+      "gridColor": "#eceef1",
+      "domainColor": "#8491a3",
+      "tickColor": "#8491a3"
+    },
+    "legend": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    },
+    "header": {
+      "labelFont": "Open Sans"
+    }
+  }
+}

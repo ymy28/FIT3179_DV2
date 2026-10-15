@@ -1,0 +1,222 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "More than one in four people aged 75+ did no physical activity in the past week",
+    "subtitle": "Minutes of physical activity in the last week, by age group, 2022 (150 minutes a week is the guideline)",
+    "anchor": "start",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "subtitleColor": "#465267",
+    "offset": 12
+  },
+  "width": "container",
+  "height": 320,
+  "data": {
+    "url": "data/06_physical_activity_by_age.csv",
+    "format": {
+      "parse": {
+        "people_000": "number",
+        "age_order": "number",
+        "level_order": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "joinaggregate": [
+        {
+          "op": "sum",
+          "field": "people_000",
+          "as": "age_total"
+        }
+      ],
+      "groupby": [
+        "age"
+      ]
+    },
+    {
+      "calculate": "datum.people_000 / datum.age_total",
+      "as": "share"
+    },
+    {
+      "stack": "people_000",
+      "groupby": [
+        "age"
+      ],
+      "sort": [
+        {
+          "field": "level_order",
+          "order": "ascending"
+        }
+      ],
+      "offset": "normalize",
+      "as": [
+        "y0",
+        "y1"
+      ]
+    },
+    {
+      "calculate": "(datum.y0 + datum.y1) / 2",
+      "as": "y_mid"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "age",
+      "type": "ordinal",
+      "sort": [
+        "18–24",
+        "25–34",
+        "35–44",
+        "45–54",
+        "55–64",
+        "65–74",
+        "75+"
+      ],
+      "title": "Age group",
+      "axis": {
+        "labelAngle": 0
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "stroke": "white",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "color": {
+          "field": "level",
+          "type": "ordinal",
+          "title": "Activity in the last week",
+          "scale": {
+            "domain": [
+              "No activity",
+              "1–149 min",
+              "150–300 min",
+              "Over 300 min"
+            ],
+            "range": [
+              "#A63D40",
+              "#F0B7A4",
+              "#A8CDE8",
+              "#245C91"
+            ]
+          },
+          "legend": {
+            "orient": "top",
+            "direction": "horizontal",
+            "symbolType": "square"
+          },
+          "sort": [
+            "No activity",
+            "1–149 min",
+            "150–300 min",
+            "Over 300 min"
+          ]
+        },
+        "tooltip": [
+          {
+            "field": "age",
+            "title": "Age"
+          },
+          {
+            "field": "level",
+            "title": "Activity last week"
+          },
+          {
+            "field": "share",
+            "type": "quantitative",
+            "title": "% of age group",
+            "format": ".1%"
+          },
+          {
+            "field": "people_000",
+            "type": "quantitative",
+            "title": "People ('000)",
+            "format": ",.0f"
+          }
+        ],
+        "y": {
+          "field": "y0",
+          "type": "quantitative",
+          "title": "Share of age group",
+          "axis": {
+            "format": "%"
+          },
+          "scale": {
+            "domain": [
+              0,
+              1
+            ]
+          }
+        },
+        "y2": {
+          "field": "y1"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontWeight": 600
+      },
+      "encoding": {
+        "y": {
+          "field": "y_mid",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "share",
+          "type": "quantitative",
+          "format": ".0%"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.level_order == 0 || datum.level_order == 3",
+            "value": "white"
+          },
+          "value": "#172b4d"
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.share >= 0.06"
+        }
+      ]
+    }
+  ],
+  "config": {
+    "font": "Open Sans",
+    "background": null,
+    "view": {
+      "stroke": null
+    },
+    "title": {
+      "font": "Open Sans",
+      "color": "#172b4d"
+    },
+    "axis": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titleFontWeight": 600,
+      "gridColor": "#eceef1",
+      "domainColor": "#8491a3",
+      "tickColor": "#8491a3"
+    },
+    "legend": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    },
+    "header": {
+      "labelFont": "Open Sans"
+    }
+  }
+}

@@ -1,0 +1,207 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Fewer older Australians rate their health highly",
+    "subtitle": "% rating their own health excellent or very good (right) vs fair or poor (left), by age, 2022. The rest rate it 'good'.",
+    "anchor": "start",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "subtitleColor": "#465267",
+    "offset": 12
+  },
+  "width": "container",
+  "height": 260,
+  "data": {
+    "url": "data/08_self_rated_health.csv"
+  },
+  "transform": [
+    {
+      "filter": "datum.rating !== 'Good'"
+    },
+    {
+      "calculate": "datum.rating === 'Fair / Poor' ? -datum.pct : datum.pct",
+      "as": "signed"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "age",
+      "type": "ordinal",
+      "title": "Age group",
+      "sort": [
+        "18\u201324",
+        "25\u201334",
+        "35\u201344",
+        "45\u201354",
+        "55\u201364",
+        "65\u201374",
+        "75+"
+      ],
+      "axis": {
+        "domain": false,
+        "ticks": false
+      }
+    },
+    "x": {
+      "field": "signed",
+      "type": "quantitative",
+      "title": null,
+      "scale": {
+        "domain": [
+          -80,
+          80
+        ]
+      },
+      "axis": {
+        "labelExpr": "abs(datum.value) + '%'",
+        "tickCount": 8
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadius": 2,
+        "height": {
+          "band": 0.75
+        }
+      },
+      "encoding": {
+        "color": {
+          "field": "rating",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Fair / Poor",
+              "Excellent / Very good"
+            ],
+            "range": [
+              "#B85618",
+              "#6941A5"
+            ]
+          },
+          "legend": {
+            "title": null,
+            "orient": "top"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "age",
+            "title": "Age"
+          },
+          {
+            "field": "rating",
+            "title": "Rating"
+          },
+          {
+            "field": "pct",
+            "title": "% of people",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.signed < 0"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "color": "#172b4d",
+        "align": "right",
+        "dx": -5
+      },
+      "encoding": {
+        "text": {
+          "field": "pct",
+          "type": "quantitative",
+          "format": ".0f"
+        },
+        "x": {
+          "field": "signed",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.signed > 0"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "color": "#172b4d",
+        "align": "left",
+        "dx": 5
+      },
+      "encoding": {
+        "text": {
+          "field": "pct",
+          "type": "quantitative",
+          "format": ".0f"
+        },
+        "x": {
+          "field": "signed",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "zero": 0
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "color": "#465267"
+      },
+      "encoding": {
+        "x": {
+          "field": "zero",
+          "type": "quantitative"
+        },
+        "y": null
+      }
+    }
+  ],
+  "config": {
+    "font": "Open Sans",
+    "background": null,
+    "view": {
+      "stroke": null
+    },
+    "title": {
+      "font": "Open Sans",
+      "color": "#172b4d"
+    },
+    "axis": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titleFontWeight": 600,
+      "gridColor": "#eceef1",
+      "domainColor": "#8491a3",
+      "tickColor": "#8491a3"
+    },
+    "legend": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    },
+    "header": {
+      "labelFont": "Open Sans"
+    }
+  }
+}

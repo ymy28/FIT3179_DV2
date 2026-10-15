@@ -1,0 +1,179 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Chronic illness is more common in disadvantaged areas",
+    "subtitle": "% with 3 or more chronic conditions, least vs most disadvantaged areas, 2022",
+    "anchor": "start",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "subtitleColor": "#465267",
+    "offset": 12
+  },
+  "width": "container",
+  "height": 320,
+  "data": {
+    "url": "data/07_no_of_chronic.csv"
+  },
+  "transform": [
+    {
+      "calculate": "datum.age === '65+' ? 'Aged 65+' : 'Aged ' + datum.age",
+      "as": "group"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "area",
+      "type": "ordinal",
+      "sort": [
+        "Least disadvantaged",
+        "Most disadvantaged"
+      ],
+      "title": null,
+      "scale": {
+        "padding": 0.6
+      },
+      "axis": {
+        "labelAngle": 0,
+        "domain": false,
+        "ticks": false,
+        "labelFontSize": 12
+      }
+    },
+    "y": {
+      "field": "pct_3plus",
+      "type": "quantitative",
+      "title": "% with 3+ chronic conditions",
+      "scale": {
+        "domain": [
+          0,
+          40
+        ]
+      }
+    },
+    "color": {
+      "field": "age",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "65+",
+          "45–64",
+          "15–44"
+        ],
+        "range": [
+          "#7946AD",
+          "#C05A12",
+          "#218358"
+        ]
+      },
+      "legend": null
+    },
+    "detail": {
+      "field": "age"
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "size": 100,
+        "opacity": 1
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "group",
+            "title": "Age"
+          },
+          {
+            "field": "area",
+            "title": "Area"
+          },
+          {
+            "field": "pct_3plus",
+            "title": "% with 3+ conditions",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.area === 'Most disadvantaged'"
+        },
+        {
+          "calculate": "datum.group + ': ' + datum.pct_3plus + '%'",
+          "as": "label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "fontSize": 12,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "text": {
+          "field": "label"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.area === 'Least disadvantaged'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -10,
+        "fontSize": 12
+      },
+      "encoding": {
+        "text": {
+          "field": "pct_3plus",
+          "type": "quantitative",
+          "format": ".1f"
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Open Sans",
+    "background": null,
+    "view": {
+      "stroke": null
+    },
+    "title": {
+      "font": "Open Sans",
+      "color": "#172b4d"
+    },
+    "axis": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titleFontWeight": 600,
+      "gridColor": "#eceef1",
+      "domainColor": "#8491a3",
+      "tickColor": "#8491a3"
+    },
+    "legend": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    },
+    "header": {
+      "labelFont": "Open Sans"
+    }
+  }
+}

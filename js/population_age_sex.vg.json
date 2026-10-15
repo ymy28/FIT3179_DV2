@@ -1,0 +1,149 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Australia\u2019s population is growing older",
+    "subtitle": "Share of Australia's population by age and sex, 1975 vs 2025 (darker bars = aged 65+)",
+    "anchor": "start",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "subtitleColor": "#465267",
+    "offset": 12
+  },
+  "data": {
+    "url": "data/01_population_time_series.csv"
+  },
+  "transform": [
+    {
+      "calculate": "datum.sex === 'Men' ? -datum.pct : datum.pct",
+      "as": "signed"
+    },
+    {
+      "calculate": "datum.age_order >= 65 ? '65+' : 'Under 65'",
+      "as": "band"
+    }
+  ],
+  "facet": {
+    "column": {
+      "field": "year",
+      "type": "ordinal",
+      "title": null,
+      "header": {
+        "labelFontSize": 15,
+        "labelFontWeight": "bold",
+        "labelColor": "#172b4d"
+      }
+    }
+  },
+  "spec": {
+    "width": 200,
+    "height": 300,
+    "mark": {
+      "type": "bar",
+      "cornerRadius": 1
+    },
+    "encoding": {
+      "y": {
+        "field": "age",
+        "type": "ordinal",
+        "sort": {
+          "field": "age_order",
+          "order": "descending"
+        },
+        "title": "Age group",
+        "axis": {
+          "labelFontSize": 10
+        }
+      },
+      "x": {
+        "field": "signed",
+        "type": "quantitative",
+        "title": "% of population",
+        "scale": {
+          "domain": [
+            -5.5,
+            5.5
+          ]
+        },
+        "axis": {
+          "labelExpr": "abs(datum.value) + '%'",
+          "tickCount": 6,
+          "grid": false
+        }
+      },
+      "color": {
+        "field": "sex",
+        "type": "nominal",
+        "scale": {
+          "domain": [
+            "Men",
+            "Women"
+          ],
+          "range": [
+            "#1768AC",
+            "#C23879"
+          ]
+        },
+        "legend": {
+          "title": null,
+          "orient": "top"
+        }
+      },
+      "opacity": {
+        "condition": {
+          "test": "datum.age_order >= 65",
+          "value": 1
+        },
+        "value": 0.4
+      },
+      "tooltip": [
+        {
+          "field": "year",
+          "title": "Year"
+        },
+        {
+          "field": "sex",
+          "title": "Sex"
+        },
+        {
+          "field": "age",
+          "title": "Age"
+        },
+        {
+          "field": "pct",
+          "title": "% of population",
+          "format": ".2f"
+        }
+      ]
+    }
+  },
+  "config": {
+    "font": "Open Sans",
+    "background": null,
+    "view": {
+      "stroke": null
+    },
+    "title": {
+      "font": "Open Sans",
+      "color": "#172b4d"
+    },
+    "axis": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titleFontWeight": 600,
+      "gridColor": "#eceef1",
+      "domainColor": "#8491a3",
+      "tickColor": "#8491a3"
+    },
+    "legend": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    },
+    "header": {
+      "labelFont": "Open Sans"
+    }
+  }
+}

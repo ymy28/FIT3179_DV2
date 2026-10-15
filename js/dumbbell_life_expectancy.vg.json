@@ -1,0 +1,158 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Women have a longer life expectancy at 65",
+    "subtitle": "Remaining life expectancy at age 65 (years), by state, 2022\u20132024",
+    "anchor": "start",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "subtitleColor": "#465267",
+    "offset": 12
+  },
+  "width": "container",
+  "height": 300,
+  "data": {
+    "url": "data/04_life_expectancy.csv"
+  },
+  "encoding": {
+    "y": {
+      "field": "state",
+      "type": "nominal",
+      "title": null,
+      "sort": [
+        "ACT",
+        "WA",
+        "Vic.",
+        "NSW",
+        "SA",
+        "Australia",
+        "Qld",
+        "Tas.",
+        "NT"
+      ],
+      "axis": {
+        "domain": false,
+        "ticks": false
+      }
+    },
+    "x": {
+      "field": "years",
+      "type": "quantitative",
+      "title": "Years of life left at 65",
+      "scale": {
+        "domain": [
+          18,
+          24
+        ]
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "color": "#8491a3",
+        "strokeWidth": 3
+      },
+      "encoding": {
+        "detail": {
+          "field": "state"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "size": 140,
+        "opacity": 1,
+        "stroke": "white",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "color": {
+          "field": "sex",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Men",
+              "Women"
+            ],
+            "range": [
+              "#087F8C",
+              "#B85618"
+            ]
+          },
+          "legend": {
+            "title": null,
+            "orient": "top"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "state",
+            "title": "State"
+          },
+          {
+            "field": "sex",
+            "title": "Sex"
+          },
+          {
+            "field": "years",
+            "title": "Years left at 65",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.state === 'Australia'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "dy": -14,
+        "fontSize": 11,
+        "color": "#465267"
+      },
+      "encoding": {
+        "text": {
+          "field": "years",
+          "type": "quantitative",
+          "format": ".1f"
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Open Sans",
+    "background": null,
+    "view": {
+      "stroke": null
+    },
+    "title": {
+      "font": "Open Sans",
+      "color": "#172b4d"
+    },
+    "axis": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titleFontWeight": 600,
+      "gridColor": "#eceef1",
+      "domainColor": "#8491a3",
+      "tickColor": "#8491a3"
+    },
+    "legend": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    },
+    "header": {
+      "labelFont": "Open Sans"
+    }
+  }
+}

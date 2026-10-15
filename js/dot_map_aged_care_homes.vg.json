@@ -1,0 +1,168 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "params": [
+    {
+      "name": "State_selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "NSW",
+          "VIC",
+          "QLD",
+          "WA",
+          "SA",
+          "TAS",
+          "ACT",
+          "NT"
+        ],
+        "labels": [
+          "Show all",
+          "NSW",
+          "VIC",
+          "QLD",
+          "WA",
+          "SA",
+          "TAS",
+          "ACT",
+          "NT"
+        ],
+        "name": "State: "
+      },
+      "value": null
+    }
+  ],
+  "title": {
+    "text": "2,772 aged care homes, hugging the coastline",
+    "subtitle": "Every residential aged care home and Multi-Purpose Service, 30 June 2025. Choose a state to filter; hover a dot for its name.",
+    "anchor": "start",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "subtitleColor": "#465267",
+    "offset": 12
+  },
+  "width": "container",
+  "height": 420,
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": [
+      -132,
+      0
+    ]
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "js/states.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "states"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e8edf2",
+        "stroke": "#ffffff",
+        "strokeWidth": 1
+      }
+    },
+    {
+      "data": {
+        "url": "data/10_aihw_aged_care_service.csv"
+      },
+      "transform": [
+        {
+          "filter": "State_selection == null || datum.state == State_selection"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "size": 14,
+        "opacity": 0.75
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "type",
+          "type": "nominal",
+          "title": null,
+          "scale": {
+            "domain": [
+              "Residential",
+              "Multi-Purpose Service"
+            ],
+            "range": [
+              "#147D52",
+              "#843CAB"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal",
+            "symbolSize": 120,
+            "labelLimit": 220
+          }
+        },
+        "tooltip": [
+          {
+            "field": "name",
+            "title": "Service"
+          },
+          {
+            "field": "type",
+            "title": "Type"
+          },
+          {
+            "field": "state",
+            "title": "State"
+          },
+          {
+            "field": "res_places",
+            "title": "Residential places"
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "font": "Open Sans",
+    "background": null,
+    "view": {
+      "stroke": null
+    },
+    "title": {
+      "font": "Open Sans",
+      "color": "#172b4d"
+    },
+    "axis": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titleFontWeight": 600,
+      "gridColor": "#eceef1",
+      "domainColor": "#8491a3",
+      "tickColor": "#8491a3"
+    },
+    "legend": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    },
+    "header": {
+      "labelFont": "Open Sans"
+    }
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Ageing has spread from the coast inland",
+    "subtitle": "Share of residents aged 65+ in each SA3 region, 2001, 2013 and 2025",
+    "anchor": "start",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "subtitleColor": "#465267",
+    "offset": 12
+  },
+  "repeat": [
+    "pct2001",
+    "pct2013",
+    "pct2025"
+  ],
+  "columns": 3,
+  "spec": {
+    "width": 235,
+    "height": 250,
+    "projection": {
+      "type": "conicEqualArea",
+      "parallels": [
+        -18,
+        -36
+      ],
+      "rotate": [
+        -132,
+        0
+      ]
+    },
+    "layer": [
+      {
+        "data": {
+          "url": "js/sa3.topojson",
+          "format": {
+            "type": "topojson",
+            "feature": "sa3"
+          }
+        },
+        "transform": [
+          {
+            "calculate": "'Data is not available for ' + datum.properties.SA3_NAME21",
+            "as": "note"
+          }
+        ],
+        "mark": {
+          "type": "geoshape",
+          "fill": "#ddd",
+          "stroke": "white",
+          "strokeWidth": 0.25
+        },
+        "encoding": {
+          "tooltip": {
+            "field": "note"
+          }
+        }
+      },
+      {
+        "data": {
+          "url": "data/02_population_by_sex_age.csv",
+          "format": {
+            "parse": {
+              "sa3_code": "string"
+            }
+          }
+        },
+        "transform": [
+          {
+            "lookup": "sa3_code",
+            "from": {
+              "data": {
+                "url": "js/sa3.topojson",
+                "format": {
+                  "type": "topojson",
+                  "feature": "sa3"
+                }
+              },
+              "key": "properties.SA3_CODE21"
+            },
+            "as": "geo"
+          }
+        ],
+        "mark": {
+          "type": "geoshape",
+          "stroke": "#fff",
+          "strokeWidth": 0.25
+        },
+        "encoding": {
+          "shape": {
+            "field": "geo",
+            "type": "geojson"
+          },
+          "color": {
+            "field": {
+              "repeat": "repeat"
+            },
+            "type": "quantitative",
+            "title": "% aged 65+",
+            "scale": {
+              "type": "threshold",
+              "domain": [
+                10,
+                15,
+                20,
+                25,
+                30
+              ],
+              "range": [
+                "#DFF7FA",
+                "#ACE3EC",
+                "#6AC9DA",
+                "#2BA6BD",
+                "#087E98",
+                "#075369"
+              ]
+            },
+            "legend": {
+              "orient": "bottom",
+              "direction": "horizontal"
+            }
+          },
+          "tooltip": [
+            {
+              "field": "sa3_name",
+              "type": "nominal",
+              "title": "Region"
+            },
+            {
+              "field": "state",
+              "type": "nominal",
+              "title": "State"
+            },
+            {
+              "field": {
+                "repeat": "repeat"
+              },
+              "type": "quantitative",
+              "title": "% aged 65+",
+              "format": ".1f"
+            }
+          ]
+        }
+      },
+      {
+        "data": {
+          "values": [
+            {
+              "pct2001": "2001",
+              "pct2013": "2013",
+              "pct2025": "2025"
+            }
+          ]
+        },
+        "mark": {
+          "type": "text",
+          "align": "left",
+          "baseline": "top",
+          "x": 0,
+          "y": 0,
+          "fontSize": 16,
+          "fontWeight": "bold",
+          "color": "#172b4d"
+        },
+        "encoding": {
+          "text": {
+            "field": {
+              "repeat": "repeat"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "config": {
+    "font": "Open Sans",
+    "background": null,
+    "view": {
+      "stroke": null
+    },
+    "title": {
+      "font": "Open Sans",
+      "color": "#172b4d"
+    },
+    "axis": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titleFontWeight": 600,
+      "gridColor": "#eceef1",
+      "domainColor": "#8491a3",
+      "tickColor": "#8491a3"
+    },
+    "legend": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    },
+    "header": {
+      "labelFont": "Open Sans"
+    }
+  }
+}

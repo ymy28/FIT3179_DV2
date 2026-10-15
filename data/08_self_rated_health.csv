@@ -1,0 +1,22 @@
+age,rating,pct
+18–24,Excellent / Very good,67.5
+25–34,Excellent / Very good,67.3
+35–44,Excellent / Very good,59.9
+45–54,Excellent / Very good,55.1
+55–64,Excellent / Very good,48.1
+65–74,Excellent / Very good,45.6
+75+,Excellent / Very good,35.6
+18–24,Good,25.1
+25–34,Good,24.2
+35–44,Good,29.0
+45–54,Good,30.6
+55–64,Good,30.7
+65–74,Good,31.7
+75+,Good,32.8
+18–24,Fair / Poor,7.7
+25–34,Fair / Poor,8.3
+35–44,Fair / Poor,10.9
+45–54,Fair / Poor,14.0
+55–64,Fair / Poor,21.2
+65–74,Fair / Poor,22.3
+75+,Fair / Poor,31.3

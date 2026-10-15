@@ -1,0 +1,158 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Most long-term conditions climb steeply after 65",
+    "subtitle": "% of people with each condition, by age group, 2022",
+    "anchor": "start",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "subtitleColor": "#465267",
+    "offset": 12
+  },
+  "width": "container",
+  "height": 360,
+  "data": {
+    "url": "data/05_long_term_conditions_by_age.csv"
+  },
+  "encoding": {
+    "x": {
+      "field": "age",
+      "type": "ordinal",
+      "sort": [
+        "15\u201324",
+        "25\u201334",
+        "35\u201344",
+        "45\u201354",
+        "55\u201364",
+        "65\u201374",
+        "75+"
+      ],
+      "title": "Age group",
+      "axis": {
+        "labelAngle": 0,
+        "orient": "top",
+        "domain": false,
+        "ticks": false
+      }
+    },
+    "y": {
+      "field": "condition",
+      "type": "nominal",
+      "title": null,
+      "sort": [
+        "Arthritis",
+        "High blood pressure",
+        "Hearing loss",
+        "High cholesterol",
+        "Back problems",
+        "Heart disease & stroke",
+        "Diabetes",
+        "Osteoporosis",
+        "Cataract",
+        "Depression",
+        "Asthma",
+        "Cancer"
+      ],
+      "axis": {
+        "domain": false,
+        "ticks": false
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "stroke": "white",
+        "strokeWidth": 2,
+        "cornerRadius": 2
+      },
+      "encoding": {
+        "color": {
+          "field": "pct",
+          "type": "quantitative",
+          "title": "% with condition",
+          "scale": {
+            "domain": [
+              0,
+              60
+            ],
+            "range": [
+              "#EDF7EF",
+              "#145C38"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "condition",
+            "title": "Condition"
+          },
+          {
+            "field": "age",
+            "title": "Age"
+          },
+          {
+            "field": "pct",
+            "title": "% with condition",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 11
+      },
+      "encoding": {
+        "text": {
+          "field": "pct",
+          "type": "quantitative",
+          "format": ".0f"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.pct >= 35",
+            "value": "white"
+          },
+          "value": "#172b4d"
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Open Sans",
+    "background": null,
+    "view": {
+      "stroke": null
+    },
+    "title": {
+      "font": "Open Sans",
+      "color": "#172b4d"
+    },
+    "axis": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titleFontWeight": 600,
+      "gridColor": "#eceef1",
+      "domainColor": "#8491a3",
+      "tickColor": "#8491a3"
+    },
+    "legend": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    },
+    "header": {
+      "labelFont": "Open Sans"
+    }
+  }
+}

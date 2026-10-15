@@ -1,0 +1,246 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "The oldest Australians are growing fastest of all",
+    "subtitle": "Share of residents aged 85+ in each SA3 region, 2001\u20132025. Use the sliders to change the year and zoom; the menu centres a capital city.",
+    "anchor": "start",
+    "fontSize": 16,
+    "subtitleFontSize": 12,
+    "subtitleColor": "#465267",
+    "offset": 12
+  },
+  "width": "container",
+  "height": 460,
+  "params": [
+    {
+      "name": "Year_selection",
+      "value": 2025,
+      "bind": {
+        "input": "range",
+        "min": 2001,
+        "max": 2025,
+        "step": 1,
+        "name": "Year: "
+      }
+    },
+    {
+      "name": "zoom_level",
+      "value": 850,
+      "bind": {
+        "input": "range",
+        "min": 800,
+        "max": 40000,
+        "step": 100,
+        "name": "Zoom: "
+      }
+    },
+    {
+      "name": "center_to",
+      "value": [
+        133.5,
+        -29
+      ],
+      "bind": {
+        "input": "select",
+        "options": [
+          [
+            133.5,
+            -29
+          ],
+          [
+            151.0,
+            -33.85
+          ],
+          [
+            145.0,
+            -37.85
+          ],
+          [
+            153.0,
+            -27.5
+          ],
+          [
+            138.6,
+            -34.9
+          ],
+          [
+            115.9,
+            -32.0
+          ],
+          [
+            147.3,
+            -42.85
+          ]
+        ],
+        "labels": [
+          "Australia",
+          "Sydney",
+          "Melbourne",
+          "Brisbane",
+          "Adelaide",
+          "Perth",
+          "Hobart"
+        ],
+        "name": "Map centre: "
+      }
+    }
+  ],
+  "projection": {
+    "type": "equirectangular",
+    "center": {
+      "expr": "center_to"
+    },
+    "scale": {
+      "expr": "zoom_level"
+    }
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "js/sa3.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "sa3"
+        }
+      },
+      "transform": [
+        {
+          "calculate": "'Data is not available for ' + datum.properties.SA3_NAME21",
+          "as": "note"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e8edf2",
+        "stroke": "white",
+        "strokeWidth": 0.5
+      },
+      "encoding": {
+        "tooltip": {
+          "field": "note"
+        }
+      }
+    },
+    {
+      "data": {
+        "url": "data/09_population_estimates.csv",
+        "format": {
+          "parse": {
+            "sa3_code": "string"
+          }
+        }
+      },
+      "transform": [
+        {
+          "lookup": "sa3_code",
+          "from": {
+            "data": {
+              "url": "js/sa3.topojson",
+              "format": {
+                "type": "topojson",
+                "feature": "sa3"
+              }
+            },
+            "key": "properties.SA3_CODE21"
+          },
+          "as": "geo"
+        },
+        {
+          "filter": "datum.year == Year_selection"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#fff",
+        "strokeWidth": 0.5
+      },
+      "encoding": {
+        "shape": {
+          "field": "geo",
+          "type": "geojson"
+        },
+        "color": {
+          "field": "pct85",
+          "type": "quantitative",
+          "title": "% aged 85+",
+          "scale": {
+            "type": "threshold",
+            "domain": [
+              1,
+              1.5,
+              2,
+              2.5,
+              3
+            ],
+            "range": [
+              "#FCE4EC",
+              "#F5B8CF",
+              "#E786AE",
+              "#CF528B",
+              "#A82D67",
+              "#741442"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "sa3_name",
+            "type": "nominal",
+            "title": "Region"
+          },
+          {
+            "field": "year",
+            "type": "quantitative",
+            "title": "Year"
+          },
+          {
+            "field": "pop85",
+            "type": "quantitative",
+            "title": "People aged 85+",
+            "format": ","
+          },
+          {
+            "field": "pct85",
+            "type": "quantitative",
+            "title": "% aged 85+",
+            "format": ".1f"
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "font": "Open Sans",
+    "background": null,
+    "view": {
+      "stroke": null
+    },
+    "title": {
+      "font": "Open Sans",
+      "color": "#172b4d"
+    },
+    "axis": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "titleFontWeight": 600,
+      "gridColor": "#eceef1",
+      "domainColor": "#8491a3",
+      "tickColor": "#8491a3"
+    },
+    "legend": {
+      "labelColor": "#465267",
+      "titleColor": "#465267",
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    },
+    "header": {
+      "labelFont": "Open Sans"
+    }
+  }
+}
