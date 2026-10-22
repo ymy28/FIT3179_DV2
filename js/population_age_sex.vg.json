@@ -16,10 +16,6 @@
     {
       "calculate": "datum.sex === 'Men' ? -datum.pct : datum.pct",
       "as": "signed"
-    },
-    {
-      "calculate": "datum.age_order >= 65 ? '65 and over' : 'Under 65'",
-      "as": "band"
     }
   ],
   "facet": {
