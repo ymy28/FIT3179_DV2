@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "Chronic illness is more common in disadvantaged areas",
-    "subtitle": "% with 3 or more chronic conditions, least vs most disadvantaged areas, 2022",
+    "subtitle": "Share of people with 3 or more chronic conditions, least compared with most disadvantaged areas, 2022",
     "anchor": "start",
     "fontSize": 16,
     "subtitleFontSize": 12,
@@ -16,7 +16,7 @@
   },
   "transform": [
     {
-      "calculate": "datum.age === '65+' ? 'Aged 65+' : 'Aged ' + datum.age",
+      "calculate": "'Aged ' + datum.age",
       "as": "group"
     }
   ],
@@ -42,7 +42,7 @@
     "y": {
       "field": "pct_3plus",
       "type": "quantitative",
-      "title": "% with 3+ chronic conditions",
+      "title": "Share with 3 or more chronic conditions (%)",
       "scale": {
         "domain": [
           0,
@@ -55,7 +55,7 @@
       "type": "nominal",
       "scale": {
         "domain": [
-          "65+",
+          "65 and over",
           "45–64",
           "15–44"
         ],
@@ -96,7 +96,7 @@
           },
           {
             "field": "pct_3plus",
-            "title": "% with 3+ conditions",
+            "title": "Share with 3 or more conditions (%)",
             "format": ".1f"
           }
         ]

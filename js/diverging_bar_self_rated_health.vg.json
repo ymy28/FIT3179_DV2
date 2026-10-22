@@ -2,7 +2,10 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "Fewer older Australians rate their health highly",
-    "subtitle": "% rating their own health excellent or very good (right) vs fair or poor (left), by age, 2022. The rest rate it 'good'.",
+    "subtitle": [
+      "Share of people rating their own health excellent or very good (right) compared with fair or poor (left), by age, 2022.",
+      "The rest rate it 'good'."
+    ],
     "anchor": "start",
     "fontSize": 16,
     "subtitleFontSize": 12,
@@ -19,7 +22,7 @@
       "filter": "datum.rating !== 'Good'"
     },
     {
-      "calculate": "datum.rating === 'Fair / Poor' ? -datum.pct : datum.pct",
+      "calculate": "datum.rating === 'Fair or poor' ? -datum.pct : datum.pct",
       "as": "signed"
     }
   ],
@@ -35,7 +38,7 @@
         "45\u201354",
         "55\u201364",
         "65\u201374",
-        "75+"
+        "75 and over"
       ],
       "axis": {
         "domain": false,
@@ -73,8 +76,8 @@
           "type": "nominal",
           "scale": {
             "domain": [
-              "Fair / Poor",
-              "Excellent / Very good"
+              "Fair or poor",
+              "Excellent or very good"
             ],
             "range": [
               "#B85618",
@@ -97,7 +100,7 @@
           },
           {
             "field": "pct",
-            "title": "% of people",
+            "title": "Share of people (%)",
             "format": ".1f"
           }
         ]

@@ -1,19 +1,19 @@
 state,sex,years
-NSW,Men,20.1
-NSW,Women,22.7
-Vic.,Men,20.3
-Vic.,Women,22.9
-Qld,Men,19.8
-Qld,Women,22.5
-SA,Men,20.1
-SA,Women,22.7
-WA,Men,20.6
-WA,Women,23.3
-Tas.,Men,19.7
-Tas.,Women,21.7
-NT,Men,18.5
-NT,Women,20.9
-ACT,Men,20.6
-ACT,Women,23.1
+New South Wales,Men,20.1
+New South Wales,Women,22.7
+Victoria,Men,20.3
+Victoria,Women,22.9
+Queensland,Men,19.8
+Queensland,Women,22.5
+South Australia,Men,20.1
+South Australia,Women,22.7
+Western Australia,Men,20.6
+Western Australia,Women,23.3
+Tasmania,Men,19.7
+Tasmania,Women,21.7
+Northern Territory,Men,18.5
+Northern Territory,Women,20.9
+Australian Capital Territory,Men,20.6
+Australian Capital Territory,Women,23.1
 Australia,Men,20.1
 Australia,Women,22.7

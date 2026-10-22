@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "More than one in four people aged 75+ did no physical activity in the past week",
+    "text": "More than one in four people aged 75 and over did no physical activity in the past week",
     "subtitle": "Minutes of physical activity in the last week, by age group, 2022 (150 minutes a week is the guideline)",
     "anchor": "start",
     "fontSize": 16,
@@ -71,7 +71,7 @@
         "45–54",
         "55–64",
         "65–74",
-        "75+"
+        "75 and over"
       ],
       "title": "Age group",
       "axis": {
@@ -94,9 +94,9 @@
           "scale": {
             "domain": [
               "No activity",
-              "1–149 min",
-              "150–300 min",
-              "Over 300 min"
+              "1–149 minutes",
+              "150–300 minutes",
+              "Over 300 minutes"
             ],
             "range": [
               "#A63D40",
@@ -112,9 +112,9 @@
           },
           "sort": [
             "No activity",
-            "1–149 min",
-            "150–300 min",
-            "Over 300 min"
+            "1–149 minutes",
+            "150–300 minutes",
+            "Over 300 minutes"
           ]
         },
         "tooltip": [
@@ -129,13 +129,13 @@
           {
             "field": "share",
             "type": "quantitative",
-            "title": "% of age group",
+            "title": "Share of age group (%)",
             "format": ".1%"
           },
           {
             "field": "people_000",
             "type": "quantitative",
-            "title": "People ('000)",
+            "title": "People (thousands)",
             "format": ",.0f"
           }
         ],

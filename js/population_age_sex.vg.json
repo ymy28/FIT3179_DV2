@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "Australia\u2019s population is growing older",
-    "subtitle": "Share of Australia's population by age and sex, 1975 vs 2025 (darker bars = aged 65+)",
+    "subtitle": "Share of Australia's population by age and sex, 1975 and 2025 (darker bars show people aged 65 and over)",
     "anchor": "start",
     "fontSize": 16,
     "subtitleFontSize": 12,
@@ -18,7 +18,7 @@
       "as": "signed"
     },
     {
-      "calculate": "datum.age_order >= 65 ? '65+' : 'Under 65'",
+      "calculate": "datum.age_order >= 65 ? '65 and over' : 'Under 65'",
       "as": "band"
     }
   ],
@@ -57,7 +57,7 @@
       "x": {
         "field": "signed",
         "type": "quantitative",
-        "title": "% of population",
+        "title": "Share of population (%)",
         "scale": {
           "domain": [
             -5.5,
@@ -110,7 +110,7 @@
         },
         {
           "field": "pct",
-          "title": "% of population",
+          "title": "Share of population (%)",
           "format": ".2f"
         }
       ]

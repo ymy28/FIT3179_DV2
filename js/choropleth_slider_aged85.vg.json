@@ -2,7 +2,10 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "The oldest Australians are growing fastest of all",
-    "subtitle": "Share of residents aged 85+ in each SA3 region, 2001\u20132025. Use the sliders to change the year and zoom; the menu centres a capital city.",
+    "subtitle": [
+      "Share of residents aged 85 and over in each region (Statistical Area Level 3), 2001\u20132025.",
+      "Use the sliders to change the year and zoom; the menu centres a capital city."
+    ],
     "anchor": "start",
     "fontSize": 16,
     "subtitleFontSize": 12,
@@ -162,7 +165,7 @@
         "color": {
           "field": "pct85",
           "type": "quantitative",
-          "title": "% aged 85+",
+          "title": "Share aged 85 and over (%)",
           "scale": {
             "type": "threshold",
             "domain": [
@@ -200,13 +203,13 @@
           {
             "field": "pop85",
             "type": "quantitative",
-            "title": "People aged 85+",
+            "title": "People aged 85 and over",
             "format": ","
           },
           {
             "field": "pct85",
             "type": "quantitative",
-            "title": "% aged 85+",
+            "title": "Share aged 85 and over (%)",
             "format": ".1f"
           }
         ]

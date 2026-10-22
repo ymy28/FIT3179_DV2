@@ -7,25 +7,25 @@
         "input": "select",
         "options": [
           null,
-          "NSW",
-          "VIC",
-          "QLD",
-          "WA",
-          "SA",
-          "TAS",
-          "ACT",
-          "NT"
+          "New South Wales",
+          "Victoria",
+          "Queensland",
+          "Western Australia",
+          "South Australia",
+          "Tasmania",
+          "Australian Capital Territory",
+          "Northern Territory"
         ],
         "labels": [
           "Show all",
-          "NSW",
-          "VIC",
-          "QLD",
-          "WA",
-          "SA",
-          "TAS",
-          "ACT",
-          "NT"
+          "New South Wales",
+          "Victoria",
+          "Queensland",
+          "Western Australia",
+          "South Australia",
+          "Tasmania",
+          "Australian Capital Territory",
+          "Northern Territory"
         ],
         "name": "State: "
       },

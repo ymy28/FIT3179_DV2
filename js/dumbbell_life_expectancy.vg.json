@@ -20,15 +20,15 @@
       "type": "nominal",
       "title": null,
       "sort": [
-        "ACT",
-        "WA",
-        "Vic.",
-        "NSW",
-        "SA",
+        "Australian Capital Territory",
+        "Western Australia",
+        "Victoria",
+        "New South Wales",
+        "South Australia",
         "Australia",
-        "Qld",
-        "Tas.",
-        "NT"
+        "Queensland",
+        "Tasmania",
+        "Northern Territory"
       ],
       "axis": {
         "domain": false,

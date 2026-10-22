@@ -2,7 +2,10 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "An older region does not mean more aged care",
-    "subtitle": "People in residential aged care per 1,000 aged 65+, by SA3 region, 30 June 2025 (AIHW residents joined to the ABS 65+ population). Drag across the scatter plot to pick out regions on the map.",
+    "subtitle": [
+      "People in residential aged care per 1,000 people aged 65 and over, by region (Statistical Area Level 3), 30 June 2025.",
+      "Drag across the scatter plot to pick out regions on the map."
+    ],
     "anchor": "start",
     "fontSize": 16,
     "subtitleFontSize": 12,
@@ -120,7 +123,7 @@
                     "param": "brush",
                     "field": "per_1000",
                     "type": "quantitative",
-                    "title": "Per 1,000 aged 65+",
+                    "title": "Per 1,000 people aged 65 and over",
                     "scale": {
                       "type": "threshold",
                       "domain": [
@@ -166,13 +169,13 @@
                   {
                     "field": "pop65_2025",
                     "type": "quantitative",
-                    "title": "People aged 65+",
+                    "title": "People aged 65 and over",
                     "format": ",.0f"
                   },
                   {
                     "field": "per_1000",
                     "type": "quantitative",
-                    "title": "Per 1,000 aged 65+",
+                    "title": "Per 1,000 people aged 65 and over",
                     "format": ".1f"
                   }
                 ]
@@ -277,7 +280,7 @@
         "x": {
           "field": "pct65_2025",
           "type": "quantitative",
-          "title": "% of residents aged 65+ (2025)",
+          "title": "Share of residents aged 65 and over, 2025 (%)",
           "scale": {
             "zero": false
           }
@@ -285,14 +288,14 @@
         "y": {
           "field": "per_1000",
           "type": "quantitative",
-          "title": "Aged care residents per 1,000 aged 65+"
+          "title": "Aged care residents per 1,000 people aged 65 and over"
         },
         "color": {
           "condition": {
             "param": "brush",
             "field": "per_1000",
             "type": "quantitative",
-            "title": "Per 1,000 aged 65+",
+            "title": "Per 1,000 people aged 65 and over",
             "scale": {
               "type": "threshold",
               "domain": [
@@ -331,13 +334,13 @@
           {
             "field": "pop65_2025",
             "type": "quantitative",
-            "title": "People aged 65+",
+            "title": "People aged 65 and over",
             "format": ",.0f"
           },
           {
             "field": "per_1000",
             "type": "quantitative",
-            "title": "Per 1,000 aged 65+",
+            "title": "Per 1,000 people aged 65 and over",
             "format": ".1f"
           }
         ]
