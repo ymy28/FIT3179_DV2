@@ -489,3 +489,51 @@ h1 span {
 .footer-author-label {
     margin-top: 12px;
 }
+
+/* Reading progress bar */
+.chapter-links {
+    position: relative;
+}
+
+.reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background-color: #ffcd91;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.chapter-links a.active {
+    color: #b44713;
+    font-weight: 800;
+    border-bottom: 2px solid #b44713;
+}
+
+/* Sticky navigation bar */
+.chapter-links {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #edf3f8;
+}
+
+/* Progress line below navigation links */
+.reading-progress {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background-color: #ffcd91;
+    z-index: 1001;
+    pointer-events: none;
+}
+
+/* Prevent headings from hiding behind the navigation */
+html {
+    scroll-padding-top: 100px;
+}

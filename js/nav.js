@@ -1,11 +1,11 @@
 // Keep chapter navigation and the reading line in sync with the reader.
 (() => {
-  const links = [...document.querySelectorAll('.topnav-links a')];
+  const links = [...document.querySelectorAll('.chapter-links a')];
   const chapters = [...document.querySelectorAll('.act')];
   const progress = document.querySelector('.reading-progress');
   let scheduled = false;
   function update() {
-    const threshold = document.querySelector('.topnav').offsetHeight + 100;
+    const threshold = document.querySelector('.chapter-links').offsetHeight + 100;
     let current = null;
     chapters.forEach(chapter => {
       if (chapter.getBoundingClientRect().top <= threshold) current = chapter.id;
