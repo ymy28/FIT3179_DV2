@@ -233,7 +233,7 @@ body {
 #top {
     background: #173653;
     color: #ffffff;
-    margin: 0 -44px 48px;
+    margin: 0 -44px 0px;
     padding: 40px 44px 0;
 }
 
@@ -425,7 +425,7 @@ h1 span {
 
 @media (max-width: 600px) {
     .page { padding: 0 18px 28px; }
-    #top { margin: 0 -18px 30px; padding: 30px 22px 0; }
+    #top { margin: 0 -18px 0px; padding: 30px 22px 0; }
     h1 { font-size: 37px; }
     .key-facts { flex-direction: column; gap: 18px; }
     .key-facts > div { display: flex; align-items: center; gap: 15px; }
@@ -490,50 +490,61 @@ h1 span {
     margin-top: 12px;
 }
 
-/* Reading progress bar */
-.chapter-links {
-    position: relative;
+#top {
+    margin-bottom: 0;
 }
 
-.reading-progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 4px;
-    background-color: #ffcd91;
-    z-index: 9999;
-    pointer-events: none;
-}
-
-.chapter-links a.active {
-    color: #b44713;
-    font-weight: 800;
-    border-bottom: 2px solid #b44713;
-}
-
-/* Sticky navigation bar */
 .chapter-links {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background-color: #edf3f8;
+
+    background: #edf3f8;
+
+    margin: 0 -44px 35px;
+    padding: 16px 44px;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+
+    border: none;
 }
 
-/* Progress line below navigation links */
+/* Navigation link styling */
+.chapter-links a {
+    color: #064f80;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* Current chapter highlight */
+.chapter-links a.active {
+    color: #b44713;
+    font-weight: 800;
+}
+
+/* Progress bar underneath navigation */
 .reading-progress {
     position: absolute;
     top: auto;
     bottom: 0;
     left: 0;
+
     width: 0%;
     height: 4px;
-    background-color: #ffcd91;
-    z-index: 1001;
+    background: #ffcd91;
+
     pointer-events: none;
 }
 
-/* Prevent headings from hiding behind the navigation */
-html {
-    scroll-padding-top: 100px;
+/* Responsive navigation */
+@media (max-width: 600px) {
+    .chapter-links {
+        margin: 0 -18px 25px;
+        padding: 14px 18px;
+        gap: 12px;
+    }
 }
